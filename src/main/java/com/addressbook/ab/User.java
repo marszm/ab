@@ -4,9 +4,17 @@ public class User {
 
     private String name;
     private String surname;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private String email;
+
+    public User(String name, String surname, String phoneNumber, String address, String email) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.email = email;
+    }
 
     public String getName() {
         return name;
@@ -24,11 +32,11 @@ public class User {
         this.surname = surname;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

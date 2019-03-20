@@ -5,7 +5,7 @@ public class UserReply {
 
     private String name;
     private String surname;
-    private int phoneNumber;
+    private String phoneNumber;
     private String address;
     private String email;
     private String bookingStatus;
@@ -26,11 +26,11 @@ public class UserReply {
         this.surname = surname;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
