@@ -20,6 +20,7 @@ public class AbApplication {
         File file = new File("C:\\user1.json");
 
         System.out.println("1 - add person");
+        System.out.println("2 - show file");
         System.out.println("4 - close");
         String choice;
         do {
@@ -40,6 +41,7 @@ public class AbApplication {
                 String email = in.nextLine();
 
                 System.out.println("1 - add person");
+                System.out.println("2 - show file");
                 System.out.println("4 - close");
 
                 User user = new User(firstName, secondName, phoneNumber, address, email);
@@ -51,6 +53,18 @@ public class AbApplication {
                     e.printStackTrace();
                 }
                 break;
+
+
+                case "2":
+                    try {
+                        User jsonToObject = objectMapper.readValue(file, User.class);
+
+                            System.out.println(jsonToObject);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
                 case  "4":
                       SpringApplication.run(AbApplication.class, args);

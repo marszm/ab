@@ -1,5 +1,6 @@
 package com.addressbook.ab;
 
+
 public class User {
 
     private String name;
@@ -7,6 +8,20 @@ public class User {
     private String phoneNumber;
     private String address;
     private String email;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public User() {
+    }
 
     public User(String name, String surname, String phoneNumber, String address, String email) {
         this.name = name;
