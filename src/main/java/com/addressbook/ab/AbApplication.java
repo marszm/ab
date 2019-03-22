@@ -1,12 +1,12 @@
 package com.addressbook.ab;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -47,8 +47,9 @@ public class AbApplication {
                 User user = new User(firstName, secondName, phoneNumber, address, email);
 
                 try{
-                    JsonGenerator jsonGenerator = objectMapper.getFactory().createGenerator(new FileOutputStream(file, true));
-                    objectMapper.writeValue(jsonGenerator, user);
+
+                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, true), user);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -57,9 +58,8 @@ public class AbApplication {
 
                 case "2":
                     try {
-                        User jsonToObject = objectMapper.readValue(file, User.class);
-
-                            System.out.println(jsonToObject);
+                        List<User> userList = objectMapper.readValue(file, new TypeReference<List<User>>(){});
+                            System.out.println(userList);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -67,8 +67,9 @@ public class AbApplication {
                     break;
 
                 case  "4":
+
                       SpringApplication.run(AbApplication.class, args);
-//                    System.exit(0);
+
                     break;
 
                 default:
