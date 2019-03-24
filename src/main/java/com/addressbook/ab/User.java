@@ -12,17 +12,17 @@ public class User {
     private String email;
 
 
-
     @Override
     public String toString() {
-        return "User{" +
+        return "User[" +
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                '}';
+                ']';
     }
+
 
     public User() {
     }

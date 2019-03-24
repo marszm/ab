@@ -6,8 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.*;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 @SpringBootApplication
 public class AbApplication {
@@ -18,10 +17,13 @@ public class AbApplication {
         ObjectMapper objectMapper = new ObjectMapper();
         Scanner in = new Scanner(System.in);
         File file = new File("C:\\user1.json");
-
-        System.out.println("1 - add person");
-        System.out.println("2 - show file");
-        System.out.println("4 - close");
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        List<Map<String, Object>> userList = new ArrayList<>();
+        System.out.println("1 - dodaj");
+        System.out.println("2 - pokaz");
+        System.out.println("3 - zapisz");
+        System.out.println("4 - edytuj");
+        System.out.println("0 - wyjdz");
         String choice;
         do {
 
@@ -29,44 +31,53 @@ public class AbApplication {
             switch (choice) {
 
                 case "1":
-                System.out.println("imie> ");
-                String firstName = in.nextLine();
-                System.out.println("nazwisko> ");
-                String secondName = in.nextLine();
-                System.out.println("numer tel.> ");
-                String phoneNumber = in.nextLine();
-                System.out.println("adres> ");
-                String address = in.nextLine();
-                System.out.println("email> ");
-                String email = in.nextLine();
 
-                System.out.println("1 - add person");
-                System.out.println("2 - show file");
-                System.out.println("4 - close");
+                        System.out.println("imie> ");
+                        String firstName = in.nextLine();
+                        System.out.println("nazwisko> ");
+                        String secondName = in.nextLine();
+                        System.out.println("numer tel.> ");
+                        String phoneNumber = in.nextLine();
+                        System.out.println("adres> ");
+                        String address = in.nextLine();
+                        System.out.println("email> ");
+                        String email = in.nextLine();
 
-                User user = new User(firstName, secondName, phoneNumber, address, email);
+                        System.out.println("1 - dodaj");
+                        System.out.println("2 - pokaz");
+                        System.out.println("3 - zapisz");
+                        System.out.println("4 - edytuj");
+                        System.out.println("0 - close");
 
-                try{
+                        stringObjectMap.put("name", firstName);
+                        stringObjectMap.put("surname", secondName);
+                        stringObjectMap.put("phoneNumber", phoneNumber);
+                        stringObjectMap.put("address", address);
+                        stringObjectMap.put("email", email);
 
-                    objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, true), user);
+                        userList.add(stringObjectMap);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
-
 
                 case "2":
                     try {
-                        List<User> userList = objectMapper.readValue(file, new TypeReference<List<User>>(){});
-                            System.out.println(userList);
+                        List<User> userListPokaz = objectMapper.readValue(file, new TypeReference<List<User>>(){});
+                        userListPokaz.forEach(usr->System.out.println(usr));
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
+                case "3":
 
-                case  "4":
+                    try{
+                        objectMapper.writer().writeValue(new FileOutputStream(file, true),userList);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case  "0":
 
                       SpringApplication.run(AbApplication.class, args);
 
@@ -75,7 +86,7 @@ public class AbApplication {
                 default:
                     System.out.println("Enter number from 1 to 4");
             }
-        }while (!choice.equals("4"));
+        }while (!choice.equals("0"));
 
     }
 }
