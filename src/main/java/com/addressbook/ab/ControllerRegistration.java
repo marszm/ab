@@ -13,10 +13,10 @@ public class ControllerRegistration {
         UserReply userReply = new UserReply();
         AddressRegistration.getInstance().addUser(user);
         userReply.setName(user.getName());
-        userReply.setSurname(user.getSurname());
-        userReply.setAddress(user.getAddress());
-        userReply.setEmail(user.getEmail());
-        userReply.setPhoneNumber(user.getPhoneNumber());
+//        userReply.setSurname(user.getSurname());
+//        userReply.setAddress(user.getAddress());
+//        userReply.setEmail(user.getEmail());
+//        userReply.setPhoneNumber(user.getPhoneNumber());
         userReply.setBookingStatus("OK");
         return userReply;
     }
