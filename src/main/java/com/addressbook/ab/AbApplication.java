@@ -38,7 +38,7 @@ public class AbApplication {
             }
         } else {
             List<User> users = new ArrayList<>();
-            System.out.println("MENU: 1- dodaj, 2- pokaz,  4- edytuj, 5- usun, 9-limit,  0-run Spring Boot RESTful API");
+            System.out.println("MENU: 1- dodaj, 2- pokaz,  4- edytuj, 5- usun, 9- limit ksiazki adresowej,  0-run Spring Boot RESTful API");
             String choice;
             do {
 
@@ -46,7 +46,7 @@ public class AbApplication {
                 switch (choice) {
 
                     case "1":
-
+                        //dodaj zytkownika do pliku
                         try {
                             users = objectMapper.readValue(file, new TypeReference<List<User>>() {
                             });
@@ -68,7 +68,6 @@ public class AbApplication {
 //                        System.out.println("email> ");
 //                        String email = in.nextLine();
 
-
                         User user = new User(id, firstName);
 
                         users.add(user);
@@ -82,7 +81,7 @@ public class AbApplication {
                         break;
 
                     case "2":
-                        //pokaz
+                        //pokaz zawartosc pliku
                         try {
                             TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
                             };
@@ -94,14 +93,23 @@ public class AbApplication {
                         break;
 
                     case "3":
-                        //zapisz
+                        //sort by name
+                        try {
+                            TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
+                            };
+                            List<User> sortByName = objectMapper.readValue(file, mapType);
+                            Collections.sort(sortByName, new NameComparator());
+                            sortByName.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                         break;
 
                     case "4":
 
-                        //edycja
-                        TypeReference<List<User>> mT = new TypeReference<List<User>>() {
-                        };
+                        //edycja danych
+                        TypeReference<List<User>> mT = new TypeReference<List<User>>(){};
                         List<User> editList = null;
 
                         try {
@@ -133,7 +141,6 @@ public class AbApplication {
 
                         User user1 = new User(idEdit, newFirstName);
                         editList.remove(idEdit - 1);
-
                         editList.add(idEdit - 1, user1);
 
                         try {
