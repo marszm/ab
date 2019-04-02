@@ -38,7 +38,8 @@ public class AbApplication {
             }
         } else {
             List<User> users = new ArrayList<>();
-            System.out.println("MENU: 1- dodaj, 2- pokaz,  4- edytuj, 5- usun, 9- limit ksiazki adresowej,  0-run Spring Boot RESTful API");
+            System.out.println("MENU: 1- dodaj do pliku, 2- pokaz plik, 3- edytuj dane, 4- usun, 5- sort wg imienia,  " +
+                    "6- sort wg nazwiska,  7- sort wg adresu email  9- limit ksiazki adresowej,  0-run Spring Boot RESTful API");
             String choice;
             do {
 
@@ -99,31 +100,10 @@ public class AbApplication {
                         break;
 
                     case "3":
-                        //sort by name
-                        try {
-                            TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
-                            };
-
-                            List<User> sortByName = objectMapper.readValue(file, mapType);
-                            Collections.sort(sortByName, new NameComparator());
-
-                            sortByName.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                                    "imie: " + usr.getFirstName() + " , " +
-                                    "nazwisko: " + usr.getSecondName() + " , " +
-                                    "numer tel.: " + usr.getPhoneNumber() + " , " +
-                                    "adres: " + usr.getAddress() + " , " +
-                                    "email: " + usr.getEmail()));
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        break;
-
-                    case "4":
 
                         //edycja danych
-                        TypeReference<List<User>> mT = new TypeReference<List<User>>(){};
+                        TypeReference<List<User>> mT = new TypeReference<List<User>>() {
+                        };
                         List<User> editList = null;
 
                         try {
@@ -166,7 +146,8 @@ public class AbApplication {
 
                         break;
 
-                    case "5":
+                    case "4":
+
                         //usun
                         TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
                         };
@@ -178,12 +159,12 @@ public class AbApplication {
                             e.printStackTrace();
                         }
 
-                        jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId()+" , "+
-                                "imie: " + usr.getFirstName()+" , "+
-                                "nazwisko: "+usr.getSecondName()+" , "+
-                                "numer tel.: "+usr.getPhoneNumber()+" , "+
-                                "adres: "+usr.getAddress()+" , "+
-                                "email: "+usr.getEmail()));
+                        jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                "imie: " + usr.getFirstName() + " , " +
+                                "nazwisko: " + usr.getSecondName() + " , " +
+                                "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                "adres: " + usr.getAddress() + " , " +
+                                "email: " + usr.getEmail()));
 
                         System.out.println("podaj id uzytkownika, ktorego chcesz usunac: ");
                         System.out.println("id> ");
@@ -196,6 +177,79 @@ public class AbApplication {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+
+                        break;
+
+                    case "5":
+
+                        //sort by name
+
+                        TypeReference<List<User>> smT = new TypeReference<List<User>>() {
+                        };
+
+                        List<User> sortByName = null;
+                        try {
+                            sortByName = objectMapper.readValue(file, smT);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Collections.sort(sortByName, new NameComparator());
+
+                        sortByName.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                "imie: " + usr.getFirstName() + " , " +
+                                "nazwisko: " + usr.getSecondName() + " , " +
+                                "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                "adres: " + usr.getAddress() + " , " +
+                                "email: " + usr.getEmail()));
+
+
+                        break;
+
+                    case "6":
+                        //sort by second name
+
+
+                        TypeReference<List<User>> nmT = new TypeReference<List<User>>() {
+                        };
+
+                        List<User> sortBySurname = null;
+                        try {
+                            sortBySurname = objectMapper.readValue(file, nmT);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Collections.sort(sortBySurname, new SurnameComparator());
+
+                        sortBySurname.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                "imie: " + usr.getFirstName() + " , " +
+                                "nazwisko: " + usr.getSecondName() + " , " +
+                                "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                "adres: " + usr.getAddress() + " , " +
+                                "email: " + usr.getEmail()));
+
+
+                        break;
+
+                    case "7":
+                        //sort by email
+
+                        TypeReference<List<User>> emmT = new TypeReference<List<User>>() {
+                        };
+
+                        List<User> sortByEmail = null;
+                        try {
+                            sortByEmail = objectMapper.readValue(file, emmT);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Collections.sort(sortByEmail, new EmailComparator());
+
+                        sortByEmail.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                "imie: " + usr.getFirstName() + " , " +
+                                "nazwisko: " + usr.getSecondName() + " , " +
+                                "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                "adres: " + usr.getAddress() + " , " +
+                                "email: " + usr.getEmail()));
 
                         break;
 
@@ -229,7 +283,8 @@ public class AbApplication {
                         break;
 
                     default:
-                        System.out.println("MENU: 1- dodaj, 2- pokaz,  4- edytuj, 5- usun, 9-limit,  0-run Spring Boot RESTful API");
+                        System.out.println("MENU: 1- dodaj do pliku, 2- pokaz plik, 3- edytuj dane, 4- usun, 5- sort wg imienia,  " +
+                                "6- sort wg nazwiska,  7- sort wg adresu email  9- limit ksiazki adresowej,  0-run Spring Boot RESTful API");
                 }
             } while (!choice.equals("0"));
 

@@ -12,7 +12,7 @@ public class ControllerRegistration {
     public UserReply createUser(@RequestBody User user){
         UserReply userReply = new UserReply();
         AddressRegistration.getInstance().addUser(user);
-        userReply.setName(user.getName());
+        userReply.setName(user.getFirstName());
 //        userReply.setSurname(user.getSurname());
 //        userReply.setAddress(user.getAddress());
 //        userReply.setEmail(user.getEmail());
