@@ -1,8 +1,12 @@
 package com.addressbook.ab;
 
 
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {
+
+    private static AtomicInteger nextID = new AtomicInteger(1);
+
     private int id;
     private String firstName;
     private String secondName;
@@ -21,6 +25,10 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
+    }
+
+    User(String firstName, String secondName, String phoneNumber, String address, String email ) {
+        this(nextID.getAndIncrement(), firstName, secondName, phoneNumber, email, address);
     }
 
     public int getId() {

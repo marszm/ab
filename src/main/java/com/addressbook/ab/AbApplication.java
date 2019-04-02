@@ -17,9 +17,29 @@ public class AbApplication {
     public static void main(String[] args) throws FileNotFoundException {
 
 
+
+
         ObjectMapper objectMapper = new ObjectMapper();
         Scanner in = new Scanner(System.in);
         File file = new File("C:\\user1.json");
+
+        Properties prop = new Properties();
+        String propFileName = "application.properties";
+
+        InputStream inputStream = AbApplication.class.getClassLoader().getResourceAsStream(propFileName);
+
+        if (inputStream != null) {
+            try {
+                prop.load(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new FileNotFoundException("application.properties" + propFileName + "nie znaleziono");
+        }
+
+        int limit = Integer.parseInt(prop.getProperty("limit"));
+
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -48,15 +68,18 @@ public class AbApplication {
 
                     case "1":
                         //dodaj zytkownika do pliku
+
                         try {
                             users = objectMapper.readValue(file, new TypeReference<List<User>>() {
                             });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        System.out.println("id> ");
-                        int id = in.nextInt();
-                        in.nextLine();
+//                        System.out.println("id> ");
+//                        int id = in.nextInt();
+//                        in.nextLine();
+
+
                         System.out.println("imie> ");
                         String firstName = in.nextLine();
                         System.out.println("nazwisko> ");
@@ -68,12 +91,15 @@ public class AbApplication {
                         System.out.println("email> ");
                         String email = in.nextLine();
 
-                        User user = new User(id, firstName, secondName, phoneNumber, address, email);
-
-                        users.add(user);
+                        User user = new User(firstName, secondName, phoneNumber, address, email);
+                        if(user.getId() <= limit) {
+                            users.add(user);
+                        } else {
+                            System.out.println("Limit bd ustawiona na: "+limit+ " uzytkownikow !!!");
+                        }
 
                         try {
-                            objectMapper.writer().writeValue(new FileOutputStream(file, false), users);
+                            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -256,24 +282,8 @@ public class AbApplication {
                     case "9":
                         //wczytaj limit wpisow z pliku application.properties
 
-                        Properties prop = new Properties();
-                        String propFileName = "application.properties";
+                        System.out.println("Limit bd ustawiona na: "+limit+ " uzytkownikow !!!");
 
-                        InputStream inputStream = AbApplication.class.getClassLoader().getResourceAsStream(propFileName);
-
-                        if (inputStream != null) {
-                            try {
-                                prop.load(inputStream);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            throw new FileNotFoundException("application.properties '" + propFileName + "' nie znaleziono");
-                        }
-
-                        int limit = Integer.parseInt(prop.getProperty("limit"));
-
-                        System.out.println("limit wpisow ustwiono na: " + limit);
                         break;
 
                     case "0":
