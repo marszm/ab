@@ -58,17 +58,16 @@ public class AbApplication {
                         in.nextLine();
                         System.out.println("imie> ");
                         String firstName = in.nextLine();
+                        System.out.println("nazwisko> ");
+                        String secondName = in.nextLine();
+                        System.out.println("numer tel.> ");
+                        String phoneNumber = in.nextLine();
+                        System.out.println("adres> ");
+                        String address = in.nextLine();
+                        System.out.println("email> ");
+                        String email = in.nextLine();
 
-//                        System.out.println("nazwisko> ");
-//                        String secondName = in.nextLine();
-//                        System.out.println("numer tel.> ");
-//                        String phoneNumber = in.nextLine();
-//                        System.out.println("adres> ");
-//                        String address = in.nextLine();
-//                        System.out.println("email> ");
-//                        String email = in.nextLine();
-
-                        User user = new User(id, firstName);
+                        User user = new User(id, firstName, secondName, phoneNumber, address, email);
 
                         users.add(user);
 
@@ -86,7 +85,14 @@ public class AbApplication {
                             TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
                             };
                             List<User> jsonToPersonList = objectMapper.readValue(file, mapType);
-                            jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
+
+                            jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                    "imie: " + usr.getFirstName() + " , " +
+                                    "nazwisko: " + usr.getSecondName() + " , " +
+                                    "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                    "adres: " + usr.getAddress() + " , " +
+                                    "email: " + usr.getEmail()));
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -97,9 +103,17 @@ public class AbApplication {
                         try {
                             TypeReference<List<User>> mapType = new TypeReference<List<User>>() {
                             };
+
                             List<User> sortByName = objectMapper.readValue(file, mapType);
                             Collections.sort(sortByName, new NameComparator());
-                            sortByName.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
+
+                            sortByName.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+                                    "imie: " + usr.getFirstName() + " , " +
+                                    "nazwisko: " + usr.getSecondName() + " , " +
+                                    "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                    "adres: " + usr.getAddress() + " , " +
+                                    "email: " + usr.getEmail()));
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -118,7 +132,12 @@ public class AbApplication {
                             e.printStackTrace();
                         }
 
-                        editList.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
+                        editList.forEach(usr -> System.out.println(("id: " + usr.getId() + " , " +
+                                "imie: " + usr.getFirstName() + " , " +
+                                "nazwisko: " + usr.getSecondName() + " , " +
+                                "numer tel.: " + usr.getPhoneNumber() + " , " +
+                                "adres: " + usr.getAddress() + " , " +
+                                "email: " + usr.getEmail())));
 
                         System.out.println("podaj id uzytkownika, ktorego chcesz edytowac: ");
                         System.out.println("id> ");
@@ -126,20 +145,16 @@ public class AbApplication {
                         in.nextLine();
                         System.out.println("nowe imie> ");
                         String newFirstName = in.nextLine();
+                        System.out.println("noew nazwisko> ");
+                        String newSecondName = in.nextLine();
+                        System.out.println("nowe numer tel.> ");
+                        String newPhoneNumber = in.nextLine();
+                        System.out.println("nowy adres> ");
+                        String newAddress = in.nextLine();
+                        System.out.println("nowy email> ");
+                        String newEmail = in.nextLine();
 
-//                    System.out.println(newFirstName);
-//                    System.out.println();
-//                        System.out.prin1tln("nazwisko> ");
-//                        String secondName = in.nextLine();
-//                        System.out.println("numer tel.> ");
-//                        String phoneNumber = in.nextLine();
-//                        System.out.println("adres> ");
-//                        String address = in.nextLine();
-//                        System.out.println("email> ");
-//                        String email = in.nextLine();
-//                    editList.remove(idEdit-1);
-
-                        User user1 = new User(idEdit, newFirstName);
+                        User user1 = new User(idEdit, newFirstName, newSecondName, newPhoneNumber, newAddress, newEmail);
                         editList.remove(idEdit - 1);
                         editList.add(idEdit - 1, user1);
 
@@ -163,13 +178,18 @@ public class AbApplication {
                             e.printStackTrace();
                         }
 
-                        jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
+                        jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId()+" , "+
+                                "imie: " + usr.getFirstName()+" , "+
+                                "nazwisko: "+usr.getSecondName()+" , "+
+                                "numer tel.: "+usr.getPhoneNumber()+" , "+
+                                "adres: "+usr.getAddress()+" , "+
+                                "email: "+usr.getEmail()));
+
                         System.out.println("podaj id uzytkownika, ktorego chcesz usunac: ");
                         System.out.println("id> ");
                         int idUser = in.nextInt();
                         System.out.println("usunieto !!! ");
                         jsonToPersonList.remove(idUser - 1);
-//                        jsonToPersonList.forEach(usr -> System.out.println("id: " + usr.getId() + ", imie: " + usr.getName()));
 
                         try {
                             objectMapper.writer().writeValue(new FileOutputStream(file, false), jsonToPersonList);
@@ -178,6 +198,7 @@ public class AbApplication {
                         }
 
                         break;
+
                     case "9":
                         //wczytaj limit wpisow z pliku application.properties
 
@@ -200,6 +221,7 @@ public class AbApplication {
 
                         System.out.println("limit wpisow ustwiono na: " + limit);
                         break;
+
                     case "0":
 
                         SpringApplication.run(AbApplication.class, args);
