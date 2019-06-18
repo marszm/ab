@@ -1,13 +1,11 @@
 package com.addressbook.ab;
 
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.UUID;
 
 public class User {
 
-    private static AtomicInteger nextID = new AtomicInteger(1);
-
-    private int id;
+    private UUID id;
     private String firstName;
     private String secondName;
     private String phoneNumber;
@@ -15,10 +13,7 @@ public class User {
     private String email;
 
 
-    public User() {
-    }
-
-    public User(int id, String firstName, String secondName, String phoneNumber, String address, String email) {
+    public User(UUID id, String firstName, String secondName, String phoneNumber, String address, String email) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -27,17 +22,14 @@ public class User {
         this.email = email;
     }
 
-    User(String firstName, String secondName, String phoneNumber, String address, String email ) {
-        this(nextID.getAndIncrement(), firstName, secondName, phoneNumber, email, address);
+    public User() {
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public String getFirstName() {
         return firstName;
