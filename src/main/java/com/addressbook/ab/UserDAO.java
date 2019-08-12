@@ -19,27 +19,60 @@ public class UserDAO {
     ObjectMapper objectMapper = null;
     File file = new File("C:\\user1.json");
     List<User> users = null;
+    private static UserDAO userDAO = null;
+    private UserDAO(){
+        users = new ArrayList<User>();
+    }
+    public static UserDAO getInstance(){
+        if(userDAO == null) {
+            userDAO = new UserDAO();
+            return userDAO;
+        }
+        else {
+            return userDAO;
+        }
+    }
     TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
 
-   /* public User inputData(){
-        System.out.println("imie> ");
-        String firstName = in.nextLine();
-        System.out.println("nazwisko> ");
-        String secondName = in.nextLine();
-        System.out.println("numer tel.> ");
-        String phoneNumber = in.nextLine();
-        System.out.println("adres> ");
-        String address = in.nextLine();
-        System.out.println("email> ");
-        String email = in.nextLine();
 
-        return  new User(id, firstName,secondName,phoneNumber,address,email);
-    }*/
+    public List<User> showFile(){
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
+            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            for(User user : users) {
+                System.out.println(user.getFirstName() + " " +
+                        user.getSecondName()+ " " +
+                        user.getEmail() + " " +
+                        user.getAddress() + " " +
+                        user.getPhoneNumber());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
 
     public User addUser(User user){
+        TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(new File("C:\\user1.json"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
         fileExist(file);
         try {
-            user = objectMapper.readValue(file, listTypeReference);
+            users = objectMapper.readValue(inputStream, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,39 +126,7 @@ public class UserDAO {
         int limit = Integer.parseInt(prop.getProperty("limit"));
     }
 
-    public List<User> showFile(){
-//        try {
-//            List<User> usersFile = objectMapper.readValue(file, listTypeReference);
-//
-//        usersFile.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-//                    "imie: " + usr.getFirstName() + " , " +
-//                    "nazwisko: " + usr.getSecondName() + " , " +
-//                    "numer tel.: " + usr.getPhoneNumber() + " , " +
-//                    "adres: " + usr.getAddress() + " , " +
-//                    "email: " + usr.getEmail()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
-            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
 
-            List<User> users = objectMapper.readValue(inputStream, listTypeReference);
-            for(User user : users) {
-                System.out.println(user.getFirstName() + "" + user.getSecondName());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
 
     public void editData(){
 

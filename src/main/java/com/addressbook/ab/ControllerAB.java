@@ -1,5 +1,6 @@
 package com.addressbook.ab;
 
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,13 @@ public class ControllerAB {
 
     @PostMapping("/create")
     public User createUser(@Valid @RequestBody User user){
-        return userDAO.addUser(user);
+        return UserDAO.getInstance().addUser(user);
     }
 
     @GetMapping("/read")
-    List<User> readAllUsers() {
-       return  userDAO.showFile();
+//    @RequestMapping(value = "read")
+    public List<User>  readAllUsers() {
+       return  UserDAO.getInstance().showFile();
     }
 
 }
