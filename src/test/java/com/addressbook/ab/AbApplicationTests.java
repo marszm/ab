@@ -27,9 +27,9 @@ public class AbApplicationTests {
     @Test
     public void addUser() {
         //create
-        User user1 = new User(UUID.randomUUID(),"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
-        User user2 = new User(UUID.randomUUID(),"Andrzej","Iksinski","693852741","Krakow","andrzej@wp.pl");
-        User user3 = new User(UUID.randomUUID(),"Marta","Marecka","888456147","Warszawa","marta@wp.pl");
+        User user1 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
+        User user2 = new User(2,"Andrzej","Iksinski","693852741","Krakow","andrzej@wp.pl");
+        User user3 = new User(3,"Marta","Marecka","888456147","Warszawa","marta@wp.pl");
 //        UserDAO userDAO = new UserDAO();
         userDAO.addUser(user1);
         userDAO.addUser(user2);
@@ -41,25 +41,6 @@ public class AbApplicationTests {
     @Test
     public  void readAllUsers() throws FileNotFoundException {
 
-        //read all
-        /*try {
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
-        TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
-
-            List<User> users = objectMapper.readValue(inputStream, listTypeReference);
-            for(User user : users) {
-                System.out.println(user.getFirstName() + "" + user.getSecondName());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
         userDAO.showFile();
     }
 

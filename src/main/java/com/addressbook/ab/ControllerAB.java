@@ -1,6 +1,5 @@
 package com.addressbook.ab;
 
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +12,28 @@ public class ControllerAB {
 
     @Autowired
     private UserDAO userDAO;
-//    private File file;
 
     @PostMapping("/create")
-    public User createUser(@Valid @RequestBody User user){
+    public User createUser(@Valid @RequestBody User user)
+    {
         return UserDAO.getInstance().addUser(user);
     }
 
     @GetMapping("/read")
-//    @RequestMapping(value = "read")
     public List<User>  readAllUsers() {
-       return  UserDAO.getInstance().showFile();
+        return  UserDAO.getInstance().showFile();
     }
+
+    @PutMapping("/update/{id}")
+    User update(@RequestBody User user) {
+        return UserDAO.getInstance().addUser(user);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    void delete(@PathVariable Integer id) {
+        UserDAO.getInstance().deleteUser(id);
+    }
+
+
 
 }

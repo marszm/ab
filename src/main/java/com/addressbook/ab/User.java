@@ -2,11 +2,10 @@ package com.addressbook.ab;
 
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class User implements Serializable {
 
-    private UUID id;
+    private int id;
     private String firstName;
     private String secondName;
     private String phoneNumber;
@@ -14,7 +13,7 @@ public class User implements Serializable {
     private String email;
 
 
-    public User(UUID id, String firstName, String secondName, String phoneNumber, String address, String email) {
+    public User(int id, String firstName, String secondName, String phoneNumber, String address, String email) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -26,7 +25,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 

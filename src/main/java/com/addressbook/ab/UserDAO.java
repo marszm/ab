@@ -15,7 +15,6 @@ import java.util.*;
 @Service
 public class UserDAO {
 
-    Scanner in = new Scanner(System.in);
     ObjectMapper objectMapper = null;
     File file = new File("C:\\user1.json");
     List<User> users = null;
@@ -61,24 +60,24 @@ public class UserDAO {
         return users;
     }
 
-    public User addUser(User user){
-        TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(new File("C:\\user1.json"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
+    public User addUser(User user) {
+
         fileExist(file);
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
             users = objectMapper.readValue(inputStream, listTypeReference);
-        } catch (IOException e) {
+            users.add(user);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        users.add(user);
-        try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), user);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,8 +125,6 @@ public class UserDAO {
         int limit = Integer.parseInt(prop.getProperty("limit"));
     }
 
-
-
     public void editData(){
 
         try {
@@ -143,24 +140,9 @@ public class UserDAO {
                 "adres: " + usr.getAddress() + " , " +
                 "email: " + usr.getEmail())));
 
-        System.out.println("podaj id uzytkownika, ktorego chcesz edytowac: ");
-        System.out.println("id> ");
-//        UUID idEdit = 0;
-        in.nextLine();
-        System.out.println("nowe imie> ");
-        String newFirstName = in.nextLine();
-        System.out.println("noew nazwisko> ");
-        String newSecondName = in.nextLine();
-        System.out.println("nowe numer tel.> ");
-        String newPhoneNumber = in.nextLine();
-        System.out.println("nowy adres> ");
-        String newAddress = in.nextLine();
-        System.out.println("nowy email> ");
-        String newEmail = in.nextLine();
-
-        User user1 = new User(UUID.randomUUID(), newFirstName, newSecondName, newPhoneNumber, newAddress, newEmail);
+//        User user1 = new User(UUID.randomUUID(), newFirstName, newSecondName, newPhoneNumber, newAddress, newEmail);
         users.remove(UUID.randomUUID());
-        users.add(user1);
+//        users.add(user1);
 
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
@@ -169,29 +151,23 @@ public class UserDAO {
         }
     }
 
-    public void deleteUser(){
+    public void deleteUser(int id){
 
         try {
-            users = objectMapper.readValue(file, listTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                "imie: " + usr.getFirstName() + " , " +
-                "nazwisko: " + usr.getSecondName() + " , " +
-                "numer tel.: " + usr.getPhoneNumber() + " , " +
-                "adres: " + usr.getAddress() + " , " +
-                "email: " + usr.getEmail()));
-
-        System.out.println("podaj id uzytkownika, ktorego chcesz usunac: ");
-        System.out.println("id> ");
-        int idUser = in.nextInt();
-        System.out.println("usunieto !!! ");
-        users.remove(idUser - 1);
-
-        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            users.remove(id-1);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
