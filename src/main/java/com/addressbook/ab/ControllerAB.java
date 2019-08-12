@@ -1,28 +1,27 @@
 package com.addressbook.ab;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class ControllerAB {
 
-    private UserDAO userDAO = new UserDAO();
+    @Autowired
+    private UserDAO userDAO;
+//    private File file;
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/api/ab/all")
-    @GetMapping("/api/ab/all")
-
-    @ResponseBody
-    public List<User> findAll(){
-//        System.out.println(userDAO.userList);
-        return userDAO.showFile();
+    @PostMapping("/create")
+    public User createUser(@Valid @RequestBody User user){
+        return userDAO.addUser(user);
     }
 
-//    @PostMapping("/api/ab/add")
-
-//    @ResponseBody
-//    public User addUser() {
-//            return userDAO.addUser();
-//    }
+    @GetMapping("/read")
+    List<User> readAllUsers() {
+       return  userDAO.showFile();
+    }
 
 }

@@ -3,19 +3,23 @@ package com.addressbook.ab;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
 
+@Service
 public class UserDAO {
 
     Scanner in = new Scanner(System.in);
-    ObjectMapper objectMapper = new ObjectMapper();
+    ObjectMapper objectMapper = null;
     File file = new File("C:\\user1.json");
-    List<User> userList = new ArrayList<>();
-    TypeReference typeReference = new TypeReference<List<User>>(){};
+    List<User> users = null;
+    TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
 
    /* public User inputData(){
         System.out.println("imie> ");
@@ -32,19 +36,20 @@ public class UserDAO {
         return  new User(id, firstName,secondName,phoneNumber,address,email);
     }*/
 
-    public void addUser(User user){
+    public User addUser(User user){
         fileExist(file);
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            user = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        userList.add(user);
+        users.add(user);
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), user);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return user;
     }
 
     public void fileExist(File file) {
@@ -89,32 +94,48 @@ public class UserDAO {
     }
 
     public List<User> showFile(){
-
+//        try {
+//            List<User> usersFile = objectMapper.readValue(file, listTypeReference);
+//
+//        usersFile.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+//                    "imie: " + usr.getFirstName() + " , " +
+//                    "nazwisko: " + usr.getSecondName() + " , " +
+//                    "numer tel.: " + usr.getPhoneNumber() + " , " +
+//                    "adres: " + usr.getAddress() + " , " +
+//                    "email: " + usr.getEmail()));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
+            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+
+            List<User> users = objectMapper.readValue(inputStream, listTypeReference);
+            for(User user : users) {
+                System.out.println(user.getFirstName() + "" + user.getSecondName());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        userList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                    "imie: " + usr.getFirstName() + " , " +
-                    "nazwisko: " + usr.getSecondName() + " , " +
-                    "numer tel.: " + usr.getPhoneNumber() + " , " +
-                    "adres: " + usr.getAddress() + " , " +
-                    "email: " + usr.getEmail()));
-
-        return userList;
+        return users;
     }
 
     public void editData(){
 
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            users = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        userList.forEach(usr -> System.out.println(("id: " + usr.getId() + " , " +
+        users.forEach(usr -> System.out.println(("id: " + usr.getId() + " , " +
                 "imie: " + usr.getFirstName() + " , " +
                 "nazwisko: " + usr.getSecondName() + " , " +
                 "numer tel.: " + usr.getPhoneNumber() + " , " +
@@ -137,11 +158,11 @@ public class UserDAO {
         String newEmail = in.nextLine();
 
         User user1 = new User(UUID.randomUUID(), newFirstName, newSecondName, newPhoneNumber, newAddress, newEmail);
-        userList.remove(UUID.randomUUID());
-        userList.add(user1);
+        users.remove(UUID.randomUUID());
+        users.add(user1);
 
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,12 +171,12 @@ public class UserDAO {
     public void deleteUser(){
 
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            users = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        userList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
                 "imie: " + usr.getFirstName() + " , " +
                 "nazwisko: " + usr.getSecondName() + " , " +
                 "numer tel.: " + usr.getPhoneNumber() + " , " +
@@ -166,10 +187,10 @@ public class UserDAO {
         System.out.println("id> ");
         int idUser = in.nextInt();
         System.out.println("usunieto !!! ");
-        userList.remove(idUser - 1);
+        users.remove(idUser - 1);
 
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -178,13 +199,13 @@ public class UserDAO {
     public void sortByFirstName(){
 
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            users = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Collections.sort(userList, new NameComparator());
+        Collections.sort(users, new NameComparator());
 
-        userList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
                 "imie: " + usr.getFirstName() + " , " +
                 "nazwisko: " + usr.getSecondName() + " , " +
                 "numer tel.: " + usr.getPhoneNumber() + " , " +
@@ -195,13 +216,13 @@ public class UserDAO {
     public void sortBySecondName(){
 
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            users = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Collections.sort(userList, new SurnameComparator());
+        Collections.sort(users, new SurnameComparator());
 
-        userList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
                 "imie: " + usr.getFirstName() + " , " +
                 "nazwisko: " + usr.getSecondName() + " , " +
                 "numer tel.: " + usr.getPhoneNumber() + " , " +
@@ -213,13 +234,13 @@ public class UserDAO {
     public void sortByEmail(){
 
         try {
-            userList = objectMapper.readValue(file, typeReference);
+            users = objectMapper.readValue(file, listTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Collections.sort(userList, new EmailComparator());
+        Collections.sort(users, new EmailComparator());
 
-        userList.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
+        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
                 "imie: " + usr.getFirstName() + " , " +
                 "nazwisko: " + usr.getSecondName() + " , " +
                 "numer tel.: " + usr.getPhoneNumber() + " , " +
