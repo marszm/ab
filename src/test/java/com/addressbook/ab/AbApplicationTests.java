@@ -20,15 +20,48 @@ public class AbApplicationTests {
     }
 
     @Test
+    public void create1() {
+
+        User user1 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
+        userDAO.addUser(user1);
+
+    }
+
+    @Test
+    public void create2() {
+
+        User user2 = new User(2,"Andrzej","Iksinski","693852741","Krakow","andrzej@wp.pl");
+        userDAO.addUser(user2);
+
+    }
+
+    @Test
+    public void create3() {
+
+        User user3 = new User(3,"Marta","Marecka","888456147","Warszawa","marta@wp.pl");
+        userDAO.addUser(user3);
+
+    }
+
+    @Test
+    public void create4() {
+
+        User user4 = new User(4,"Anna","Marecka","888456147","Warszawa","marta@wp.pl");
+        userDAO.addUser(user4);
+
+    }
+
+    @Test
     public void create() {
 
         User user1 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
         User user2 = new User(2,"Andrzej","Iksinski","693852741","Krakow","andrzej@wp.pl");
         User user3 = new User(3,"Marta","Marecka","888456147","Warszawa","marta@wp.pl");
-
+        User user4 = new User(4,"Anna","Marecka","888456147","Warszawa","marta@wp.pl");
         userDAO.addUser(user1);
         userDAO.addUser(user2);
         userDAO.addUser(user3);
+        userDAO.addUser(user4);
 
     }
     @Test

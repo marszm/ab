@@ -80,24 +80,28 @@ public class UserDAO {
     public User addUser(User user) {
 
         fileExist(file);
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            InputStream inputStream = new FileInputStream(file);
-            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
-            users = objectMapper.readValue(inputStream, listTypeReference);
-            users.add(user);
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return user;
+
+
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                InputStream inputStream = new FileInputStream(file);
+                TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+                users = objectMapper.readValue(inputStream, listTypeReference);
+                if(users.size() < dataBaseSizeLimit())
+                users.add(user);
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
+                inputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (JsonParseException e) {
+                e.printStackTrace();
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return user;
     }
 
     public void fileExist(File file) {
@@ -121,7 +125,7 @@ public class UserDAO {
         }
     }
 
-    public void dataBaseSizeLimit(){
+    public int dataBaseSizeLimit(){
 
         Properties prop = new Properties();
         String propFileName = "application.properties";
@@ -140,6 +144,7 @@ public class UserDAO {
             }
         }
         int limit = Integer.parseInt(prop.getProperty("limit"));
+        return limit;
     }
 
     public User editUser(User user){
