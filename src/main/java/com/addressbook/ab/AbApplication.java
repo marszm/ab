@@ -10,6 +10,5 @@ public class AbApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(AbApplication.class, args);
-//        System.out.println(UserDAO.getInstance().dataBaseSizeLimit());
     }
 }
