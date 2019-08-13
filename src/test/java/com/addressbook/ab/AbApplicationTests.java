@@ -54,4 +54,25 @@ public class AbApplicationTests {
         userDAO.editUser(user5);
     }
 
+    @Test
+    public  void sortByFirstName(){
+
+        userDAO.sortByFirstName();
+
+    }
+
+    @Test
+    public  void sortBySecondName(){
+
+        userDAO.sortBySecondName();
+
+    }
+
+    @Test
+    public  void sortByEmail(){
+
+        userDAO.sortByEmail();
+
+    }
+
 }
