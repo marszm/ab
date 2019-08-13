@@ -121,7 +121,7 @@ public class UserDAO {
         }
     }
 
-    public void loadDataBaseSizeLimit(){
+    public void DataBaseSizeLimit(){
 
         Properties prop = new Properties();
         String propFileName = "application.properties";
