@@ -1,4 +1,6 @@
-package com.addressbook.ab;
+package com.addressbook.ab.DAO;
+
+import com.addressbook.ab.model.User;
 
 import java.util.Comparator;
 

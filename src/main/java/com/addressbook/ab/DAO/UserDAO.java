@@ -1,5 +1,7 @@
-package com.addressbook.ab;
+package com.addressbook.ab.DAO;
 
+import com.addressbook.ab.AbApplication;
+import com.addressbook.ab.model.User;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -17,11 +19,13 @@ public class UserDAO {
 
     ObjectMapper objectMapper = null;
     File file = new File("C:\\user1.json");
-    List<User> users = null;
+    List<User> users;
     private static UserDAO userDAO = null;
+
     private UserDAO(){
         users = new ArrayList<User>();
     }
+
     public static UserDAO getInstance(){
         if(userDAO == null) {
             userDAO = new UserDAO();
@@ -31,18 +35,32 @@ public class UserDAO {
             return userDAO;
         }
     }
-    TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
 
+    public List<User> sortByFirstName(){
+        users.sort(Comparator.comparing(User::getFirstName));
+        return users;
+    }
+
+    public List<User> sortBySecondName(){
+        users.sort(Comparator.comparing(User::getSecondName));
+        return users;
+    }
+
+    public List<User> sortByEmail(){
+        users.sort(Comparator.comparing(User::getEmail));
+        return users;
+    }
 
     public List<User> showFile(){
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
             TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
-
             users = objectMapper.readValue(inputStream, listTypeReference);
             for(User user : users) {
-                System.out.println(user.getFirstName() + " " +
+                System.out.println(user.getId() + " " +
+                        user.getFirstName() + " " +
                         user.getSecondName()+ " " +
                         user.getEmail() + " " +
                         user.getAddress() + " " +
@@ -71,7 +89,6 @@ public class UserDAO {
             users.add(user);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
             inputStream.close();
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (JsonParseException e) {
@@ -85,6 +102,7 @@ public class UserDAO {
     }
 
     public void fileExist(File file) {
+
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -125,30 +143,28 @@ public class UserDAO {
         int limit = Integer.parseInt(prop.getProperty("limit"));
     }
 
-    public void editData(){
+    public User editUser(User user){
 
         try {
-            users = objectMapper.readValue(file, listTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        users.forEach(usr -> System.out.println(("id: " + usr.getId() + " , " +
-                "imie: " + usr.getFirstName() + " , " +
-                "nazwisko: " + usr.getSecondName() + " , " +
-                "numer tel.: " + usr.getPhoneNumber() + " , " +
-                "adres: " + usr.getAddress() + " , " +
-                "email: " + usr.getEmail())));
-
-//        User user1 = new User(UUID.randomUUID(), newFirstName, newSecondName, newPhoneNumber, newAddress, newEmail);
-        users.remove(UUID.randomUUID());
-//        users.add(user1);
-
-        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            users.remove(user.getId()-1);
+            users.add(user.getId()-1,user);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
+            inputStream.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return user;
     }
 
     public void deleteUser(int id){
@@ -171,58 +187,5 @@ public class UserDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void sortByFirstName(){
-
-        try {
-            users = objectMapper.readValue(file, listTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collections.sort(users, new NameComparator());
-
-        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                "imie: " + usr.getFirstName() + " , " +
-                "nazwisko: " + usr.getSecondName() + " , " +
-                "numer tel.: " + usr.getPhoneNumber() + " , " +
-                "adres: " + usr.getAddress() + " , " +
-                "email: " + usr.getEmail()));
-    }
-
-    public void sortBySecondName(){
-
-        try {
-            users = objectMapper.readValue(file, listTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collections.sort(users, new SurnameComparator());
-
-        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                "imie: " + usr.getFirstName() + " , " +
-                "nazwisko: " + usr.getSecondName() + " , " +
-                "numer tel.: " + usr.getPhoneNumber() + " , " +
-                "adres: " + usr.getAddress() + " , " +
-                "email: " + usr.getEmail()));
-
-    }
-
-    public void sortByEmail(){
-
-        try {
-            users = objectMapper.readValue(file, listTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collections.sort(users, new EmailComparator());
-
-        users.forEach(usr -> System.out.println("id: " + usr.getId() + " , " +
-                "imie: " + usr.getFirstName() + " , " +
-                "nazwisko: " + usr.getSecondName() + " , " +
-                "numer tel.: " + usr.getPhoneNumber() + " , " +
-                "adres: " + usr.getAddress() + " , " +
-                "email: " + usr.getEmail()));
-
     }
 }

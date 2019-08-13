@@ -1,5 +1,7 @@
-package com.addressbook.ab;
+package com.addressbook.ab.controler;
 
+import com.addressbook.ab.DAO.UserDAO;
+import com.addressbook.ab.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,10 @@ public class ControllerAB {
     public List<User>  readAllUsers() {
         return  UserDAO.getInstance().showFile();
     }
-
-    @PutMapping("/update/{id}")
-    User update(@RequestBody User user) {
-        return UserDAO.getInstance().addUser(user);
+    //to do
+    @PutMapping("/update")
+    User update(@Valid @RequestBody User user) {
+        return UserDAO.getInstance().editUser(user);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -34,6 +36,23 @@ public class ControllerAB {
         UserDAO.getInstance().deleteUser(id);
     }
 
+    @GetMapping("/sortByFirstName")
+    public List<User> sortByFirstName()
+    {
+        return  UserDAO.getInstance().sortByFirstName();
+    }
+
+    @GetMapping("/sortBySecondName")
+    public List<User> sortBySecondName()
+    {
+        return  UserDAO.getInstance().sortBySecondName();
+    }
+
+    @GetMapping("/sortByEmail")
+    public List<User> sortByEmail()
+    {
+        return  UserDAO.getInstance().sortByEmail();
+    }
 
 
 }

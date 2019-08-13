@@ -1,4 +1,4 @@
-package com.addressbook.ab;
+package com.addressbook.ab.model;
 
 
 import java.io.Serializable;
@@ -29,7 +29,9 @@ public class User implements Serializable {
         return id;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
