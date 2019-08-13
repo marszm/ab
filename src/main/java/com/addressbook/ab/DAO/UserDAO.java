@@ -17,7 +17,6 @@ import java.util.*;
 @Service
 public class UserDAO {
 
-    ObjectMapper objectMapper = null;
     File file = new File("C:\\user1.json");
     List<User> users;
     private static UserDAO userDAO = null;

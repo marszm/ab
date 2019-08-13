@@ -2,7 +2,6 @@ package com.addressbook.ab.controler;
 
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,8 +11,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ControllerAB {
 
-    @Autowired
-    private UserDAO userDAO;
 
     @PostMapping("/create")
     public User createUser(@Valid @RequestBody User user)
