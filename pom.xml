@@ -12,13 +12,21 @@
     <artifactId>ab</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ab</name>
-    <description>AddresBookApp</description>
+    <description>AddressBookApp</description>
 
     <properties>
         <java.version>1.8</java.version>
+        <junit.jupiter.version>5.5.1</junit.jupiter.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>

@@ -19,9 +19,9 @@ public class UserDAO {
 
     File file = new File("C:\\user1.json");
     Set<User> users;
-    private static UserDAO userDAO = null;
+    public static UserDAO userDAO = null;
 
-    private UserDAO(){
+    public UserDAO(){
         users = new LinkedHashSet<>();
     }
 
