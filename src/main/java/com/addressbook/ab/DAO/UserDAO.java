@@ -18,11 +18,11 @@ import java.util.*;
 public class UserDAO {
 
     File file = new File("C:\\user1.json");
-    List<User> users;
+    Set<User> users;
     private static UserDAO userDAO = null;
 
     private UserDAO(){
-        users = new ArrayList<User>();
+        users = new LinkedHashSet<>();
     }
 
     public static UserDAO getInstance(){
@@ -35,27 +35,27 @@ public class UserDAO {
         }
     }
 
-    public List<User> sortByFirstName(){
-        users.sort(Comparator.comparing(User::getFirstName));
+    public Set<User> sortByFirstName(){
+        users.stream().sorted(Comparator.comparing(User::getFirstName));
         return users;
     }
 
-    public List<User> sortBySecondName(){
-        users.sort(Comparator.comparing(User::getSecondName));
+    public Set<User> sortBySecondName(){
+        users.stream().sorted(Comparator.comparing(User::getSecondName));
         return users;
     }
 
-    public List<User> sortByEmail(){
-        users.sort(Comparator.comparing(User::getEmail));
+    public Set<User> sortByEmail(){
+        users.stream().sorted(Comparator.comparing(User::getEmail));
         return users;
     }
 
-    public List<User> showFile(){
+    public Set<User> showFile(){
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             InputStream inputStream = new FileInputStream(new File("C:\\user1.json"));
-            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
             users = objectMapper.readValue(inputStream, listTypeReference);
             for(User user : users) {
                 System.out.println(user.getId() + " " +
@@ -85,7 +85,7 @@ public class UserDAO {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 InputStream inputStream = new FileInputStream(file);
-                TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+                TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
                 users = objectMapper.readValue(inputStream, listTypeReference);
                 if(users.size() < dataBaseSizeLimit())
                 users.add(user);
@@ -152,10 +152,11 @@ public class UserDAO {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             InputStream inputStream = new FileInputStream(file);
-            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
             users = objectMapper.readValue(inputStream, listTypeReference);
-            users.remove(user.getId()-1);
-            users.add(user.getId()-1,user);
+//            users.remove(user);
+            users.removeIf(s -> s.getId() == user.getId());
+            users.add(user);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
             inputStream.close();
 
@@ -176,9 +177,9 @@ public class UserDAO {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             InputStream inputStream = new FileInputStream(file);
-            TypeReference<List<User>> listTypeReference = new TypeReference<List<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
             users = objectMapper.readValue(inputStream, listTypeReference);
-            users.remove(id-1);
+            users.removeIf(s -> s.getId() == id);
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
             inputStream.close();
 

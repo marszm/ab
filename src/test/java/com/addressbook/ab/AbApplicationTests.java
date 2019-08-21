@@ -23,7 +23,9 @@ public class AbApplicationTests {
     public void create1() {
 
         User user1 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
+        User user2 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
         userDAO.addUser(user1);
+        userDAO.addUser(user2);
 
     }
 
@@ -67,7 +69,7 @@ public class AbApplicationTests {
     @Test
     public  void delete(){
 
-        userDAO.deleteUser(2);
+        userDAO.deleteUser(3);
 
     }
 
@@ -81,9 +83,9 @@ public class AbApplicationTests {
     @Test
     public  void update(){
 
-        User user4 = new User(1,"G","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
+//        User user4 = new User(1,"G","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
         User user5 = new User(1,"Ggg","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
-        userDAO.editUser(user4);
+//        userDAO.editUser(user4);
         userDAO.editUser(user5);
     }
 

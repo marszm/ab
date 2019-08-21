@@ -2,6 +2,7 @@ package com.addressbook.ab.model;
 
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class User implements Serializable {
 
@@ -83,5 +84,23 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                firstName.equals(user.firstName) &&
+                secondName.equals(user.secondName) &&
+                phoneNumber.equals(user.phoneNumber) &&
+                address.equals(user.address) &&
+                email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, secondName, phoneNumber, address, email);
     }
 }

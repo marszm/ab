@@ -5,8 +5,9 @@ import com.addressbook.ab.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class ControllerAB {
@@ -19,7 +20,7 @@ public class ControllerAB {
     }
 
     @GetMapping("/read")
-    public List<User>  readAllUsers() {
+    public Set<User> readAllUsers() {
         return  UserDAO.getInstance().showFile();
     }
     //to do
@@ -34,19 +35,19 @@ public class ControllerAB {
     }
 
     @GetMapping("/sortByFirstName")
-    public List<User> sortByFirstName()
+    public Set<User> sortByFirstName()
     {
         return  UserDAO.getInstance().sortByFirstName();
     }
 
     @GetMapping("/sortBySecondName")
-    public List<User> sortBySecondName()
+    public Set<User> sortBySecondName()
     {
         return  UserDAO.getInstance().sortBySecondName();
     }
 
     @GetMapping("/sortByEmail")
-    public List<User> sortByEmail()
+    public Set<User> sortByEmail()
     {
         return  UserDAO.getInstance().sortByEmail();
     }
