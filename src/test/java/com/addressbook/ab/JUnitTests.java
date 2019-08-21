@@ -25,4 +25,41 @@ public class JUnitTests {
 
     }
 
+    @Test
+    public  void read(){
+
+        userDAO.showFile();
+
+    }
+
+    @Test
+    public  void update(){
+
+//        User user4 = new User(1,"G","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
+        User user5 = new User(1,"Ggg","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
+//        userDAO.editUser(user4);
+        userDAO.editUser(user5);
+    }
+
+    @Test
+    public  void sortByFirstName(){
+
+        userDAO.sortByFirstName();
+
+    }
+
+    @Test
+    public  void sortBySecondName(){
+
+        userDAO.sortBySecondName();
+
+    }
+
+    @Test
+    public  void sortByEmail(){
+
+        userDAO.sortByEmail();
+
+    }
+
 }
