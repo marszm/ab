@@ -2,6 +2,7 @@ package com.addressbook.ab.controler;
 
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;
+import com.addressbook.ab.sorting.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,19 +39,19 @@ public class ControllerAB {
     @GetMapping("/sortByFirstName")
     public List<User> sortByFirstName()
     {
-        return  UserDAO.getInstance().sortByFirstName();
+        return  Sort.getInstance().sortByFirstName();
     }
 
     @GetMapping("/sortBySecondName")
     public List<User> sortBySecondName()
     {
-        return  UserDAO.getInstance().sortBySecondName();
+        return  Sort.getInstance().sortBySecondName();
     }
 
     @GetMapping("/sortByEmail")
     public List<User> sortByEmail()
     {
-        return  UserDAO.getInstance().sortByEmail();
+        return  Sort.getInstance().sortByEmail();
     }
 
 

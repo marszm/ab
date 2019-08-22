@@ -1,11 +1,9 @@
 package com.addressbook.ab.model;
 
-
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Objects;
 
-public class User implements Serializable, Comparator, Comparable {
+public class User implements Serializable {
 
     private int id;
     private String firstName;
@@ -88,11 +86,6 @@ public class User implements Serializable, Comparator, Comparable {
     }
 
     @Override
-    public int compare(Object o1, Object o2) {
-        return 0;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -110,8 +103,4 @@ public class User implements Serializable, Comparator, Comparable {
         return Objects.hash(id, firstName, secondName, phoneNumber, address, email);
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
-    }
 }

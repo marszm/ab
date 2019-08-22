@@ -1,4 +1,4 @@
-package com.addressbook.ab.DAO;
+package com.addressbook.ab.sorting;
 
 import com.addressbook.ab.model.User;
 

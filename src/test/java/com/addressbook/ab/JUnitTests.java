@@ -2,6 +2,7 @@ package com.addressbook.ab;
 
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;
+import com.addressbook.ab.sorting.Sort;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,6 +10,7 @@ public class JUnitTests {
 
     @Autowired
     UserDAO userDAO = new UserDAO();
+    Sort sort = new Sort();
 
     User user1 = new User(1,"Jan","Kowalski","666525111","Kielce","jan@wp.pl");
     User user2 = new User(2,"Andrzej","Iksinski","693852741","Krakow","andrzej@wp.pl");
@@ -44,21 +46,21 @@ public class JUnitTests {
     @Test
     public  void sortByFirstName(){
 
-        userDAO.sortByFirstName();
+        sort.sortByFirstName();
 
     }
 
     @Test
     public  void sortBySecondName(){
 
-        userDAO.sortBySecondName();
+        sort.sortBySecondName();
 
     }
 
     @Test
     public  void sortByEmail(){
 
-        userDAO.sortByEmail();
+        sort.sortByEmail();
 
     }
 

@@ -2,6 +2,7 @@ package com.addressbook.ab;
 
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;
+import com.addressbook.ab.sorting.Sort;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ public class AbApplicationTests {
 
     @Autowired
     UserDAO userDAO;
+    Sort sort;
 
     @Test
     public void contextLoads() {
@@ -92,21 +94,21 @@ public class AbApplicationTests {
     @Test
     public  void sortByFirstName(){
 
-        userDAO.sortByFirstName();
+        sort.sortByFirstName();
 
     }
 
     @Test
     public  void sortBySecondName(){
 
-        userDAO.sortBySecondName();
+        sort.sortBySecondName();
 
     }
 
     @Test
     public  void sortByEmail(){
 
-        userDAO.sortByEmail();
+        sort.sortByEmail();
 
     }
 
