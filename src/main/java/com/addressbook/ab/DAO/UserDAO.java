@@ -1,14 +1,11 @@
 package com.addressbook.ab.DAO;
 
-import com.addressbook.ab.AbApplication;
 import com.addressbook.ab.config.DataBaseLimit;
 import com.addressbook.ab.model.User;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +15,10 @@ import java.util.*;
 @Service
 public class UserDAO {
 
-    File file = new File("C:\\user1.json");
-    Set<User> users;
+    private File file = new File("C:\\user1.json");
+    private Set<User> users;
 
-    public static UserDAO userDAO = null;
+    private static UserDAO userDAO = null;
 
     public UserDAO(){
         users = new LinkedHashSet<>();
@@ -52,12 +49,6 @@ public class UserDAO {
                         user.getAddress() + " " +
                         user.getPhoneNumber());
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,17 +69,11 @@ public class UserDAO {
                 users.add(user);
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
                 inputStream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            return user;
+        return user;
     }
 
     public User editUser(User user){
@@ -103,12 +88,6 @@ public class UserDAO {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
             inputStream.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,18 +105,12 @@ public class UserDAO {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), users);
             inputStream.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void fileExist(File file) {
+    private void fileExist(File file) {
 
         if (!file.exists()) {
             try {

@@ -27,8 +27,7 @@ public class DataBaseLimit {
                 e.printStackTrace();
             }
         }
-        int limit = Integer.parseInt(prop.getProperty("limit"));
-        return limit;
+        return Integer.parseInt(prop.getProperty("limit"));
     }
 
 }
