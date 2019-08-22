@@ -5,6 +5,7 @@ import com.addressbook.ab.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
@@ -35,19 +36,19 @@ public class ControllerAB {
     }
 
     @GetMapping("/sortByFirstName")
-    public Set<User> sortByFirstName()
+    public List<User> sortByFirstName()
     {
         return  UserDAO.getInstance().sortByFirstName();
     }
 
     @GetMapping("/sortBySecondName")
-    public Set<User> sortBySecondName()
+    public List<User> sortBySecondName()
     {
         return  UserDAO.getInstance().sortBySecondName();
     }
 
     @GetMapping("/sortByEmail")
-    public Set<User> sortByEmail()
+    public List<User> sortByEmail()
     {
         return  UserDAO.getInstance().sortByEmail();
     }

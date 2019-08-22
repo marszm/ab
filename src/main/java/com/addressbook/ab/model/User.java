@@ -2,9 +2,10 @@ package com.addressbook.ab.model;
 
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
-public class User implements Serializable {
+public class User implements Serializable, Comparator, Comparable {
 
     private int id;
     private String firstName;
@@ -87,6 +88,11 @@ public class User implements Serializable {
     }
 
     @Override
+    public int compare(Object o1, Object o2) {
+        return 0;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -102,5 +108,10 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, secondName, phoneNumber, address, email);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
     }
 }

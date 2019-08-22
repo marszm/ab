@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserDAO {
@@ -36,19 +35,84 @@ public class UserDAO {
         }
     }
 
-    public Set<User> sortByFirstName(){
-        users.stream().sorted(Comparator.comparing(User::getFirstName));
-        return users;
+    public List<User> sortByFirstName(){
+
+        List<User> userList = new ArrayList<>();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            userList = new ArrayList<>(users);
+            Collections.sort(userList, new FirstNameComparator());
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(userList);
+       return userList;
     }
 
-    public Set<User> sortBySecondName(){
-        users.stream().sorted(Comparator.comparing(User::getSecondName));
-        return users;
+    public List<User> sortBySecondName(){
+
+        List<User> userList = new ArrayList<>();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            userList = new ArrayList<>(users);
+            Collections.sort(userList, new SecondNameComparator());
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(userList);
+        return userList;
+
     }
 
-    public Set<User> sortByEmail(){
-        users.stream().sorted(Comparator.comparing(User::getEmail));
-        return users;
+    public List<User> sortByEmail(){
+
+        List<User> userList = new ArrayList<>();
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            InputStream inputStream = new FileInputStream(file);
+            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            users = objectMapper.readValue(inputStream, listTypeReference);
+            userList = new ArrayList<>(users);
+            Collections.sort(userList, new EmailComparator());
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new FileOutputStream(file, false), userList);
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(userList);
+        return userList;
+
     }
 
     public Set<User> showFile(){
