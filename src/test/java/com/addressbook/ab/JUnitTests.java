@@ -20,9 +20,9 @@ public class JUnitTests {
     @Test
     public void create() {
 
-        userDAO.addUser(user1);
-        userDAO.addUser(user2);
-        userDAO.addUser(user3);
+//        userDAO.addUser(user1);
+//        userDAO.addUser(user2);
+//        userDAO.addUser(user3);
         userDAO.addUser(user4);
 
     }

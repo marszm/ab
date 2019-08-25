@@ -1,4 +1,4 @@
-package com.addressbook.ab.controler;
+package com.addressbook.ab.controller;
 
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;

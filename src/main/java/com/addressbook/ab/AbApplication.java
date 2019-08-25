@@ -1,6 +1,5 @@
 package com.addressbook.ab;
 
-import com.addressbook.ab.DAO.UserDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
