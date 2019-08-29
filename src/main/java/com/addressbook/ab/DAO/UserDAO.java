@@ -18,21 +18,21 @@ public class UserDAO {
     private File file = new File("C:\\user1.json");
     private Set<User> users;
 
-    private static UserDAO userDAO = null;
+//    private static UserDAO userDAO = null;
 
     public UserDAO(){
         users = new LinkedHashSet<>();
     }
 
-    public static UserDAO getInstance(){
-        if(userDAO == null) {
-            userDAO = new UserDAO();
-            return userDAO;
-        }
-        else {
-            return userDAO;
-        }
-    }
+//    public static UserDAO getInstance(){
+//        if(userDAO == null) {
+//            userDAO = new UserDAO();
+//            return userDAO;
+//        }
+//        else {
+//            return userDAO;
+//        }
+//    }
 
     public Set<User> showFile(){
 

@@ -14,44 +14,51 @@ import java.util.Set;
 @RequestMapping("/api")
 public class ControllerAB {
 
+    Sort sort = new Sort();
+    private UserDAO userDAO = new UserDAO();
 
     @PostMapping("/create")
     public User createUser(@Valid @RequestBody User user)
     {
-        return UserDAO.getInstance().addUser(user);
+        return userDAO.addUser(user);
     }
 
     @GetMapping("/read")
     public Set<User> readAllUsers() {
-        return  UserDAO.getInstance().showFile();
+
+        return  userDAO.showFile();
     }
 
     @PutMapping("/update")
     User update(@Valid @RequestBody User user) {
-        return UserDAO.getInstance().editUser(user);
+
+        return userDAO.editUser(user);
+
     }
 
     @DeleteMapping("/delete/{id}")
     void delete(@PathVariable Integer id) {
-        UserDAO.getInstance().deleteUser(id);
+
+        userDAO.deleteUser(id);
+
     }
 
     @GetMapping("/sortByFirstName")
     public List<User> sortByFirstName()
     {
-        return  Sort.getInstance().sortByFirstName();
+        return  sort.sortByFirstName();
     }
 
     @GetMapping("/sortBySecondName")
     public List<User> sortBySecondName()
     {
-        return  Sort.getInstance().sortBySecondName();
+        return  sort.sortBySecondName();
     }
 
     @GetMapping("/sortByEmail")
     public List<User> sortByEmail()
     {
-        return  Sort.getInstance().sortByEmail();
+        return  sort.sortByEmail();
     }
 
 

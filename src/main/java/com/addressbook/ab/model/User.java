@@ -5,6 +5,8 @@ import java.util.Objects;
 
 public class User implements Serializable {
 
+//    String id = UUID.randomUUID().toString();
+
     private int id;
     private String firstName;
     private String secondName;
