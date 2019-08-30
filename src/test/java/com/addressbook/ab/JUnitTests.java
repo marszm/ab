@@ -18,6 +18,8 @@ public class JUnitTests {
     User user4 = new User(4,"Anna","Marecka","888456147","Warszawa","marta@wp.pl");
 
 
+    User user7 = new User(4,"A","M","888456147","Warszawa","marta@wp.pl");
+
     User user5 = new User(1,"Ggg","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
     User user6 = new User(1,"G","BRZECZYSZCZYKIEWICZ","000000000","POZNAN","GB@wp.pl");
 
@@ -28,6 +30,7 @@ public class JUnitTests {
         userDAO.addUser(user2);
         userDAO.addUser(user3);
         userDAO.addUser(user4);
+        userDAO.addUser(user7);
 
     }
 
