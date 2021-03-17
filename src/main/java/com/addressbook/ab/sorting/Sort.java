@@ -3,30 +3,20 @@ package com.addressbook.ab.sorting;
 import com.addressbook.ab.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.*;
 
+@Component
 public class Sort {
 
-    private File file = new File("C:\\user1.json");
+    private final File file = new File("user1.json");
     private Set<User> users;
-    private ObjectMapper objectMapper = new ObjectMapper();
-
-    private static Sort sort = null;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Sort(){
         users = new LinkedHashSet<>();
-    }
-
-    public static Sort getInstance(){
-        if(sort == null) {
-            sort = new Sort();
-            return sort;
-        }
-        else {
-            return sort;
-        }
     }
 
     public List<User> sortByFirstName(){
@@ -35,7 +25,8 @@ public class Sort {
 
         try {
             InputStream inputStream = new FileInputStream(file);
-            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<>() {
+            };
             users = objectMapper.readValue(inputStream, listTypeReference);
             userList = new ArrayList<>(users);
             userList.sort(new FirstNameComparator());
@@ -54,7 +45,8 @@ public class Sort {
 
         try {
             InputStream inputStream = new FileInputStream(file);
-            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<>() {
+            };
             users = objectMapper.readValue(inputStream, listTypeReference);
             userList = new ArrayList<>(users);
             userList.sort(new SecondNameComparator());
@@ -74,7 +66,8 @@ public class Sort {
 
         try {
             InputStream inputStream = new FileInputStream(file);
-            TypeReference<Set<User>> listTypeReference = new TypeReference<Set<User>>() {};
+            TypeReference<Set<User>> listTypeReference = new TypeReference<>() {
+            };
             users = objectMapper.readValue(inputStream, listTypeReference);
             userList = new ArrayList<>(users);
             userList.sort(new EmailComparator());

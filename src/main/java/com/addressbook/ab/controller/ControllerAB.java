@@ -3,6 +3,7 @@ package com.addressbook.ab.controller;
 import com.addressbook.ab.DAO.UserDAO;
 import com.addressbook.ab.model.User;
 import com.addressbook.ab.sorting.Sort;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,31 +13,31 @@ import java.util.Set;
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class ControllerAB {
 
-    Sort sort = new Sort();
-    private UserDAO userDAO = new UserDAO();
+    private final Sort sort;
+    private final UserDAO userDAO;
 
-    @PostMapping("/create")
-    public User createUser(@Valid @RequestBody User user)
-    {
+    @PostMapping("/users")
+    public User createUser(@Valid @RequestBody User user) {
         return userDAO.addUser(user);
     }
 
-    @GetMapping("/read")
+    @GetMapping("/users")
     public Set<User> readAllUsers() {
 
-        return  userDAO.showFile();
+        return userDAO.showFile();
     }
 
-    @PutMapping("/update")
+    @PutMapping("/users")
     User update(@Valid @RequestBody User user) {
 
         return userDAO.editUser(user);
 
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/users/{id}")
     void delete(@PathVariable Integer id) {
 
         userDAO.deleteUser(id);
@@ -44,21 +45,18 @@ public class ControllerAB {
     }
 
     @GetMapping("/sortByFirstName")
-    public List<User> sortByFirstName()
-    {
-        return  sort.sortByFirstName();
+    public List<User> sortByFirstName() {
+        return sort.sortByFirstName();
     }
 
     @GetMapping("/sortBySecondName")
-    public List<User> sortBySecondName()
-    {
-        return  sort.sortBySecondName();
+    public List<User> sortBySecondName() {
+        return sort.sortBySecondName();
     }
 
     @GetMapping("/sortByEmail")
-    public List<User> sortByEmail()
-    {
-        return  sort.sortByEmail();
+    public List<User> sortByEmail() {
+        return sort.sortByEmail();
     }
 
 
